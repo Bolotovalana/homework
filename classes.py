@@ -13,7 +13,7 @@ class Point:
 
 
 class Figure(ABC):
-
+    @staticmethod
     def calculate_dimension(x, y, x2, y2):
         return math.sqrt(((x2 - x) ** 2) + ((y2 - y) ** 2))
 
@@ -48,15 +48,15 @@ class Triangle(Figure):
         self.point3 = Point(x3, y3)
 
     def perimeter(self):
-        side1 = Triangle.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
-        side2 = Triangle.calculate_dimension(self.point2.x, self.point2.y, self.point3.x, self.point3.y)
-        side3 = Triangle.calculate_dimension(self.point1.x, self.point1.y, self.point3.x, self.point3.y)
+        side1 = self.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
+        side2 = self.calculate_dimension(self.point2.x, self.point2.y, self.point3.x, self.point3.y)
+        side3 = self.calculate_dimension(self.point1.x, self.point1.y, self.point3.x, self.point3.y)
         return side1 + side2 + side3
 
     def square(self):
-        side1 = Triangle.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
-        side2 = Triangle.calculate_dimension(self.point2.x, self.point2.y, self.point3.x, self.point3.y)
-        side3 = Triangle.calculate_dimension(self.point1.x, self.point1.y, self.point3.x, self.point3.y)
+        side1 = self.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
+        side2 = self.calculate_dimension(self.point2.x, self.point2.y, self.point3.x, self.point3.y)
+        side3 = self.calculate_dimension(self.point1.x, self.point1.y, self.point3.x, self.point3.y)
         s = (side1 + side2 + side3) / 2.0
         return math.sqrt(s * (s - side1) * (s - side2) * (s - side3))
 
@@ -69,10 +69,10 @@ class Square(Figure):
         self.point2 = Point(x2, y2)
 
     def perimeter(self):
-        side1 = Square.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
+        side1 = self.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
 
         return side1 * 4
 
     def square(self):
-        side1 = Triangle.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
+        side1 = self.calculate_dimension(self.point1.x, self.point1.y, self.point2.x, self.point2.y)
         return side1 ** 2
