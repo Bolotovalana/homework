@@ -17,7 +17,7 @@ class Car:
     def slow_down(self):
         if self._speed != 0:
             if (self._speed - 5) < 0:
-                raise Exception("Скорости меньше нуля не бывает!")
+                raise Speed_lower_zero_Exception
             else:
                 self._speed = self._speed - 5
         elif self._speed == 0:
@@ -43,3 +43,7 @@ class Car:
         while self._speed < 45:
             self.accelerate()
             self.show_speed()
+
+
+class Speed_lower_zero_Exception(BaseException):
+    pass

@@ -1,5 +1,5 @@
 import unittest
-from car import Car
+from car import Car, Speed_lower_zero_Exception
 
 
 class test_car(unittest.TestCase):
@@ -17,6 +17,8 @@ class test_car(unittest.TestCase):
         self.car1._speed = 5
         self.car1.slow_down()
         self.assertEqual(self.car1._speed, 0)
+        self.car1._speed = -1
+        self.assertRaises(Speed_lower_zero_Exception, lambda: self.car1.slow_down())
 
     def test_stop(self):
         self.car1._speed = 15
