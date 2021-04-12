@@ -13,7 +13,19 @@ class Temperature(BaseModel):
     convert celsius value to fahrenheit
     """
 
-    @validator('temp')
+    @validator('temp', allow_reuse=True)
+    def celsius_to_fahrenheit(cls, value: float) -> float:
+        return round(value * 9 / 5 + 32, 2)
+
+    @validator('feels_like', allow_reuse=True)
+    def celsius_to_fahrenheit(cls, value: float) -> float:
+        return round(value * 9 / 5 + 32, 2)
+
+    @validator('temp_min', allow_reuse=True)
+    def celsius_to_fahrenheit(cls, value: float) -> float:
+        return round(value * 9 / 5 + 32, 2)
+
+    @validator('temp_max', allow_reuse=True)
     def celsius_to_fahrenheit(cls, value: float) -> float:
         return round(value * 9 / 5 + 32, 2)
 
@@ -46,12 +58,12 @@ class Coordinates:
         result = requests.get(link)
         return result
 
-    def parse_json_data(self, json_data):
+    def parse_json_data(self, json_dat):
         """
         Get JSON response and retrieve certain parameters from JSON and return object Weather with schema data
 
         """
-        j_data = json.loads(json_data.text)
+        j_data = json.loads(json_dat.text)
         try:
             feels_like = j_data.get['main']['feels_like']
         except:
@@ -72,7 +84,10 @@ class Coordinates:
 
 coordinates = Coordinates(35, 139)
 json_data = coordinates.get_weather_data()
+
 weather = coordinates.parse_json_data(json_data)
+print(json_data)
+print(weather)
 print(f"Current weather in {weather.name}: {weather.description}, temperature is {weather.temperature.temp}F \n"
       f"feels_like is {weather.temperature.feels_like}F, minimal temperature is {weather.temperature.temp_min}F, \n"
-      f"maximum temperature is {weather.temperature.temp_max}F, pressure is {weather.pressure}")
+      f"maximum temperature is {weather.temperature.temp_max}F, pressure is {weather.pressure}inHG")
